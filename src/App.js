@@ -1,25 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import Row from "./components/Row";
+import { Input } from "./components/Input";
+import { ClearButton } from "./components/ClearButton";
+import * as math from 'mathjs';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { input: "" };
+  }
+
+  addToInput = (val) => {
+    this.setState({input: this.state.input + val});
+  }
+
+  handEqual = () => {
+    this.setState({input: math.evaluate(this.state.input)})
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <div className="calc-wrapper">
+          <Input input={this.state.input}></Input>
+          <Row handleClick={this.addToInput} values={{ first: 7, second: 8, third: 9, forth: "/" }}></Row>
+          <Row handleClick={this.addToInput} values={{ first: 4, second: 5, third: 6, forth: "*" }}></Row>
+          <Row handleClick={this.addToInput} values={{ first: 1, second: 2, third: 3, forth: "+" }}></Row>
+          <Row handleClick={this.addToInput} handEqual={this.handEqual} values={{ first: ".", second: 0, third: "=", forth: "-" }}></Row>
+          <ClearButton handleClear={() => this.setState({ input: "" })}>
+            Clear
+          </ClearButton>
+        </div>
+      </div>
+    );
+  }
 }
 
 export default App;
