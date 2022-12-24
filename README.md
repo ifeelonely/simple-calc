@@ -1,0 +1,2 @@
+- In this pet-project I practiced such topics as hooks, state, props, styling in react etc.
+- To run this project clone this repo and install all dependenciese using npm i.
